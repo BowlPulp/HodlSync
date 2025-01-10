@@ -34,9 +34,9 @@ function App() {
       <Route path="home" element={<AdminHome/>} />
     </Route>
 
-    <Route path="/calculator/" element={<SipCalculator />}>
+    <Route path="/calculator/" element={<CalculatorLayout />}>
       <Route path="home" element={<CalculatorHome/>} />
-      <Route path="sip" element={<SipCalculator/>} />
+      <Route path="sip-calculator" element={<SipCalculator/>} />
     </Route>
 
     <Route path='*' element={<NotFound/>}/>

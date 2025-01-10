@@ -44,7 +44,7 @@ const HomeNavbar = () => {
         } md:flex flex-col md:flex-row gap-6 md:gap-12 absolute md:static bg-gray-800 md:bg-transparent top-20 md:top-0 left-0 w-full md:w-auto p-6 md:p-0`}
       >
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/calculator">Calculator</NavLink>
+        <NavLink to="/calculator/home">Calculator</NavLink>
         <NavLink to="/pricing">Pricing</NavLink>
 
         {!isAuthenticated ? (
