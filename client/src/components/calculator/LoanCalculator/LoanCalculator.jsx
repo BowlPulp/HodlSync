@@ -3,8 +3,8 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const LoanCalculator = () => {
-  const [loanAmount, setLoanAmount] = useState(500000);
-  const [interestRate, setInterestRate] = useState(10);
+  const [loanAmount, setLoanAmount] = useState(1000000);
+  const [interestRate, setInterestRate] = useState(6.5);
   const [loanTenure, setLoanTenure] = useState(5);
   const [emi, setEmi] = useState(0);
   const [totalAmountPaid, setTotalAmountPaid] = useState(0);
@@ -46,19 +46,20 @@ const LoanCalculator = () => {
 
   const generateAmortizationData = () => {
     const months = loanTenure * 12;
+    let balance = loanAmount; // Initialize balance with the loan amount
     let amortization = [];
 
     for (let month = 1; month <= months; month++) {
-      const principalPaid = emi * ((Math.pow(1 + interestRate / 1200, month - 1) * (interestRate / 1200)) / (Math.pow(1 + interestRate / 1200, months) - 1));
-      const interestPaid = emi - principalPaid;
-      const balance = loanAmount - principalPaid * month;
+      const interestPaid = balance * (interestRate / 1200); // Monthly interest rate
+      const principalPaid = emi - interestPaid; // Principal is EMI minus interest
+      balance -= principalPaid; // Update the balance by deducting the principal
 
       amortization.push({
         month: month,
         principalPaid: principalPaid.toFixed(0),
         interestPaid: interestPaid.toFixed(0),
         totalPayment: emi.toFixed(0),
-        balance: balance.toFixed(0),
+        balance: Math.max(0, balance.toFixed(0)), // Ensure balance doesn't go negative
       });
     }
     return amortization;
@@ -77,6 +78,7 @@ const LoanCalculator = () => {
           <p className="text-gray-300 text-center mb-6">
             Calculate your EMI, Total Amount Paid, and Interest for a loan in real time.
           </p>
+
           <div className="space-y-6">
             <div>
               <label className="block text-gray-300 font-medium mb-2">
@@ -227,6 +229,7 @@ const LoanCalculator = () => {
             <option value="Yearly">Yearly</option>
           </select>
         </div>
+
         <div className="overflow-x-auto">
           <table className="w-full table-auto text-gray-300">
             <thead>
@@ -241,15 +244,11 @@ const LoanCalculator = () => {
             <tbody>
               {periodData.map((item, index) => (
                 <tr key={index}>
-                  <td className="px-4 py-2">
-                    {amortizationPeriod === "Monthly"
-                      ? `Month ${item.month}`
-                      : `Year ${Math.ceil(item.month / 12)}`}
-                  </td>
-                  <td className="px-4 py-2">{formatNumber(item.principalPaid)}</td>
-                  <td className="px-4 py-2">{formatNumber(item.interestPaid)}</td>
-                  <td className="px-4 py-2">{formatNumber(item.totalPayment)}</td>
-                  <td className="px-4 py-2">{formatNumber(item.balance)}</td>
+                  <td className="px-4 py-2">{item.month}</td>
+                  <td className="px-4 py-2">₹{formatNumber(item.principalPaid)}</td>
+                  <td className="px-4 py-2">₹{formatNumber(item.interestPaid)}</td>
+                  <td className="px-4 py-2">₹{formatNumber(item.totalPayment)}</td>
+                  <td className="px-4 py-2">₹{formatNumber(item.balance)}</td>
                 </tr>
               ))}
             </tbody>
