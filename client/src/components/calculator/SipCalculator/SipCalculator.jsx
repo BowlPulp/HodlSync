@@ -94,7 +94,7 @@ const SipCalculator = () => {
                   <input
                     type="range"
                     min="100"
-                    max="10000000"
+                    max="1000000" // SIP max value
                     step="100"
                     value={monthlyInvestment}
                     onChange={(e) => setMonthlyInvestment(Number(e.target.value))}
@@ -105,10 +105,10 @@ const SipCalculator = () => {
                     value={monthlyInvestment}
                     onChange={(e) =>
                       setMonthlyInvestment(
-                        Math.min(Number(e.target.value), 10000000)
+                        Math.min(Number(e.target.value), 1000000) // SIP max value
                       )
                     }
-                    className="w-32 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-green-400 text-black text-lg"
+                    className="w-32 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-green-400 text-black text-lg appearance-none"
                   />
                 </div>
               </div>
@@ -121,7 +121,7 @@ const SipCalculator = () => {
                   <input
                     type="range"
                     min="100"
-                    max="10000000"
+                    max="10000000" // Lump sum max value
                     step="100"
                     value={lumpSumInvestment}
                     onChange={(e) =>
@@ -134,10 +134,10 @@ const SipCalculator = () => {
                     value={lumpSumInvestment}
                     onChange={(e) =>
                       setLumpSumInvestment(
-                        Math.min(Number(e.target.value), 10000000)
+                        Math.min(Number(e.target.value), 10000000) // Lump sum max value
                       )
                     }
-                    className="w-32 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-green-400 text-black text-lg"
+                    className="w-32 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-green-400 text-black text-lg appearance-none"
                   />
                 </div>
               </div>

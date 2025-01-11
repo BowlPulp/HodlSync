@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CalculatorHome = () => {
   const calculators = [
-    { name: "SIP Calculator", path: "/calculator/sip-calculator", description: "Plan your investments effectively." },
+    { name: "SIP & Lumpsum Calculator", path: "/calculator/sip-calculator", description: "Plan your investments effectively." },
     { name: "Loan Calculator", path: "/calculator/loan-calculator", description: "Calculate your loan EMIs easily." },
     { name: "FD Calculator", path: "/calculator/fd-calculator", description: "Estimate your fixed deposit returns." },
     { name: "Retirement Calculator", path: "/calculator/retirement-calculator", description: "Secure your future with better planning." },

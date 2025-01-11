@@ -13,6 +13,7 @@ import HomeContact from './components/home/HomeContact/HomeContact'
 import CalculatorLayout from './components/CalculatorLayout'
 import CalculatorHome from './components/calculator/CalculatorHome/CalculatorHome'
 import SipCalculator from './components/calculator/SipCalculator/SipCalculator'
+import LoanCalculator from './components/calculator/LoanCalculator/LoanCalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,6 +38,7 @@ function App() {
     <Route path="/calculator/" element={<CalculatorLayout />}>
       <Route path="home" element={<CalculatorHome/>} />
       <Route path="sip-calculator" element={<SipCalculator/>} />
+      <Route path="loan-calculator" element={<LoanCalculator/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>
