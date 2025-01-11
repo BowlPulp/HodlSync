@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaPhone, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import Footer from "../../footer/Footer";
-import HomeNavbar from "../homenavbar/homenavbar";
+import HomeNavbar from "../HomeNavbar/HomeNavbar";
 
 const HomeContact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });

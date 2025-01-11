@@ -3,7 +3,7 @@ import { VelocityHero } from '../HomeHero/VelocityHero'
 import AboutHodlSync from '../HomeHero/AboutHodlSync'
 import TopCryptoList from '../HomeHero/TopCryptoList'
 import AccordionSolutions from '../HomeHero/AccordionSolutions'
-import HomeNavbar from '../homenavbar/homenavbar'
+import HomeNavbar from '../HomeNavbar/HomeNavbar'
 import Footer from '../../footer/Footer'
 
 const HomePage = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../../footer/Footer";
-import HomeNavbar from "../homenavbar/homenavbar";
+import HomeNavbar from "../HomeNavbar/HomeNavbar";
 
 const HomePricing = () => {
   const walletAddress = "0x3E09abaCA3a9F2f51201C411DdCb1c56007AEFE2"; // Replace with your actual wallet address

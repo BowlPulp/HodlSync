@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Footer from './footer/Footer';
-import HomeNavbar from './home/homenavbar/homenavbar';
+import HomeNavbar from './home/HomeNavbar/HomeNavbar';
 
 
 function HomeLayout() {

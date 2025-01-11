@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../../footer/Footer";
-import HomeNavbar from "../homenavbar/homenavbar";
+import HomeNavbar from "../HomeNavbar/HomeNavbar";
 
 const HomePrivacy = () => {
   return (
