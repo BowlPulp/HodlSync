@@ -22,7 +22,7 @@ const CalculatorHome = () => {
             <Link
               to={calc.path}
               key={index}
-              className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-transform transform hover:-translate-y-1"
+              className="bg-gray-400 shadow-lg rounded-lg p-6 hover:shadow-xl transition-transform transform hover:-translate-y-1"
             >
               <h2 className="text-xl font-semibold text-gray-800">{calc.name}</h2>
               <p className="text-gray-600 mt-2">{calc.description}</p>
