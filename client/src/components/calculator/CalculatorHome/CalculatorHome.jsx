@@ -6,6 +6,7 @@ const CalculatorHome = () => {
     { name: "SIP & Lumpsum Calculator", path: "/calculator/sip-calculator", description: "Plan your investments effectively." },
     { name: "Loan Calculator", path: "/calculator/loan-calculator", description: "Calculate your loan EMIs easily." },
     { name: "Simple Interest Calculator", path: "/calculator/simple-interest-calculator", description: "Estimate your simple interest returns." },
+    { name: "Compound Interest Calculator", path: "/calculator/compound-interest-calculator", description: "Estimate your compound interest returns." },
     // { name: "Retirement Calculator", path: "/calculator/retirement-calculator", description: "Secure your future with better planning." },
   ];
 

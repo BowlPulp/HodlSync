@@ -15,6 +15,7 @@ import CalculatorHome from './components/calculator/CalculatorHome/CalculatorHom
 import SipCalculator from './components/calculator/SipCalculator/SipCalculator'
 import LoanCalculator from './components/calculator/LoanCalculator/LoanCalculator'
 import SimpleInterestCalculator from './components/calculator/SimpleInterestCalculator/SimpleInterestCalculator'
+import CompoundInterestCalculator from './components/calculator/CalculatorHome/CompoundInterestCalculator/CompoundInterestCalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -41,6 +42,7 @@ function App() {
       <Route path="sip-calculator" element={<SipCalculator/>} />
       <Route path="loan-calculator" element={<LoanCalculator/>}/>
       <Route path="simple-interest-calculator" element={<SimpleInterestCalculator/>}/>
+      <Route path="compound-interest-calculator" element={<CompoundInterestCalculator/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>
