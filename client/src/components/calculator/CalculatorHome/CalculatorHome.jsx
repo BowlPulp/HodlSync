@@ -14,6 +14,7 @@ const CalculatorHome = () => {
     { name: "Inflation Calculator", path: "/calculator/inflation-calculator", description: "Estimate how inflation will affect the cost of items and your purchasing power." },
     { name: "Target Amount Calculator", path: "/calculator/target-amount-calculator", description: "Find out how much to invest today to reach a target amount in the future, considering inflation and returns." },
     { name: "Arbitrage Calculator", path: "/calculator/arbitrage-calculator", description: "Arbitrage calculator allows you to enter the odds of two (or more) different bets to determine how much you should stake on each to guarantee a profit." },
+    { name: "Currency Calculator", path: "/calculator/currency-calculator", description: "Convert currencies instantly with real-time exchange rates. Easily switch between different currencies for accurate conversions." },
   ];
 
   // Filter calculators based on search query

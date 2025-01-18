@@ -21,6 +21,7 @@ import SWPCalculator from './components/calculator/SWPCalculator/SWPCalculator'
 import InflationCalculator from './components/calculator/InflationCalculator/InflationCalculator'
 import TargetAmountCalculator from './components/calculator/TargetAmountCalculator/TargetAmountCalculator'
 import ArbitrageCalculator from './components/calculator/ArbitrageCalculator/ArbitrageCalculator'
+import CurrencyConverter from './components/calculator/CurrencyCalculator/CurrencyCalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -53,6 +54,7 @@ function App() {
       <Route path='inflation-calculator' element={<InflationCalculator/>}/>
       <Route path='target-amount-calculator' element={<TargetAmountCalculator/>}/>
       <Route path='arbitrage-calculator' element={<ArbitrageCalculator/>}/>
+      <Route path='currency-calculator' element={<CurrencyConverter/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>
