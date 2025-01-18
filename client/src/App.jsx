@@ -20,6 +20,7 @@ import FDCalculator from './components/calculator/FDCalculator/FDCalculator'
 import SWPCalculator from './components/calculator/SWPCalculator/SWPCalculator'
 import InflationCalculator from './components/calculator/InflationCalculator/InflationCalculator'
 import TargetAmountCalculator from './components/calculator/TargetAmountCalculator/TargetAmountCalculator'
+import ArbitrageCalculator from './components/calculator/ArbitrageCalculator/ArbitrageCalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -51,6 +52,7 @@ function App() {
       <Route path='swp-calculator' element={<SWPCalculator/>}/>
       <Route path='inflation-calculator' element={<InflationCalculator/>}/>
       <Route path='target-amount-calculator' element={<TargetAmountCalculator/>}/>
+      <Route path='arbitrage-calculator' element={<ArbitrageCalculator/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>
