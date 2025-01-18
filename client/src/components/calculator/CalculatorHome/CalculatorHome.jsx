@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 
 const CalculatorHome = () => {
   const calculators = [
-    { name: "SIP & Lumpsum Calculator", path: "/calculator/sip-calculator", description: "Plan your investments effectively." },
-    { name: "Loan Calculator", path: "/calculator/loan-calculator", description: "Calculate your loan EMIs easily." },
-    { name: "Simple Interest Calculator", path: "/calculator/simple-interest-calculator", description: "Estimate your simple interest returns." },
-    { name: "Compound Interest Calculator", path: "/calculator/compound-interest-calculator", description: "Estimate your compound interest returns." },
-    // { name: "Retirement Calculator", path: "/calculator/retirement-calculator", description: "Secure your future with better planning." },
+    { name: "SIP & Lumpsum Calculator", path: "/calculator/sip-calculator", description: "Plan and estimate returns on your SIP and lump sum investments to reach your financial goals." },
+    { name: "Loan Calculator", path: "/calculator/loan-calculator", description: "Calculate your loan EMIs easily based on principal, interest rate, and tenure." },
+    { name: "Simple Interest Calculator", path: "/calculator/simple-interest-calculator", description: "Estimate your returns with simple interest on your investment." },
+    { name: "Compound Interest Calculator", path: "/calculator/compound-interest-calculator", description: "Calculate returns with compound interest and visualize wealth growth over time." },
+    { name: "FD Calculator", path: "/calculator/fd-calculator", description: "Calculate the returns on your Fixed Deposit based on amount, tenure, and interest rate." },
+    { name: "SWP Calculator", path: "/calculator/swp-calculator", description: "Plan and manage regular withdrawals from your investments for steady income." },
+    { name: "Inflation Calculator", path: "/calculator/inflation-calculator", description: "Estimate how inflation will affect the cost of items and your purchasing power." },
+    { name: "Target Amount Calculator", path: "/calculator/target-amount-calculator", description: "Find out how much to invest today to reach a target amount in the future, considering inflation and returns." },
   ];
 
   return (

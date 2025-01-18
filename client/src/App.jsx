@@ -15,7 +15,11 @@ import CalculatorHome from './components/calculator/CalculatorHome/CalculatorHom
 import SipCalculator from './components/calculator/SipCalculator/SipCalculator'
 import LoanCalculator from './components/calculator/LoanCalculator/LoanCalculator'
 import SimpleInterestCalculator from './components/calculator/SimpleInterestCalculator/SimpleInterestCalculator'
-import CompoundInterestCalculator from './components/calculator/CalculatorHome/CompoundInterestCalculator/CompoundInterestCalculator'
+import CompoundInterestCalculator from './components/calculator/CompoundInterestCalculator/CompoundInterestCalculator'
+import FDCalculator from './components/calculator/FDCalculator/FDCalculator'
+import SWPCalculator from './components/calculator/SWPCalculator/SWPCalculator'
+import InflationCalculator from './components/calculator/InflationCalculator/InflationCalculator'
+import TargetAmountCalculator from './components/calculator/TargetAmountCalculator/TargetAmountCalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -43,6 +47,10 @@ function App() {
       <Route path="loan-calculator" element={<LoanCalculator/>}/>
       <Route path="simple-interest-calculator" element={<SimpleInterestCalculator/>}/>
       <Route path="compound-interest-calculator" element={<CompoundInterestCalculator/>}/>
+      <Route path='fd-calculator' element={<FDCalculator/>}/>
+      <Route path='swp-calculator' element={<SWPCalculator/>}/>
+      <Route path='inflation-calculator' element={<InflationCalculator/>}/>
+      <Route path='target-amount-calculator' element={<TargetAmountCalculator/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>

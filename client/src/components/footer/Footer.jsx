@@ -20,7 +20,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="text-center md:text-right">
-            <p>© 2024 HODLSync. All rights reserved.</p>
+            <p>© 2025 HODLSync. All rights reserved.</p>
           </div>
 
           {/* Social Media Icons */}
