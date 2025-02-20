@@ -22,6 +22,8 @@ import InflationCalculator from './components/calculator/InflationCalculator/Inf
 import TargetAmountCalculator from './components/calculator/TargetAmountCalculator/TargetAmountCalculator'
 import ArbitrageCalculator from './components/calculator/ArbitrageCalculator/ArbitrageCalculator'
 import CurrencyConverter from './components/calculator/CurrencyCalculator/CurrencyCalculator'
+import HomeSignup from './components/home/HomeSignup/HomeSignup'
+import HomeLogin from './components/home/HomeLogin/HomeLogin'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,7 +35,8 @@ function App() {
     <Route path="/pricing" element={<HomePricing/>}/>
     <Route path="/privacy" element={<HomePrivacy/>}/>
     <Route path="/contact" element={<HomeContact/>}/>
-
+    <Route path="/signup" element={<HomeSignup/>}/>
+    <Route path='/login' element={<HomeLogin/>}/>
 
     <Route path="/user/" element={<UserLayout />}>
       <Route path="home" element={<UserHome/>} />
