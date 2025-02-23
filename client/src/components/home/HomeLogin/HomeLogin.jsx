@@ -48,11 +48,15 @@ const HomeLogin = () => {
     <>
       <HomeNavbar />
       <section>
-        <div className="flex h-screen md:flex-row flex-col">
-          <div className="w-full md:w-1/2 bg-[#267347] md:px-4">
+        <div className="flex h-screen md:flex-row flex-col bg-gradient-to-br from-green-400 via-gray-800 to-black">
+          <div className="w-full md:w-1/2  md:px-4">
             <div className="h-screen flex items-center justify-center">
               <div className="grid">
                 <h2 className="text-3xl font-bold leading-tight text-[black] sm:text-4xl">Login</h2>
+                {/* <h2 className="text-3xl font-bold leading-tight text-[black] sm:text-4xl">Sign up</h2> */}
+                <p className="mt-2 text-base text-[#1f2936] mb-5"> Dont have an account?{' '}
+                   <a href="/signup" className="font-semibold text-black transition-all duration-200 hover:underline">Register here</a>
+                </p>
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col gap-2 mt-5">
                     <p className="text-lg">Email Address</p>
@@ -87,7 +91,7 @@ const HomeLogin = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 bg-[#1f2936] flex justify-center items-center">
+          <div className="w-full md:w-1/2  flex justify-center items-center">
             <img src="/login.gif" alt="Login illustration" />
           </div>
         </div>
