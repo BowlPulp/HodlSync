@@ -62,7 +62,7 @@ const UserHome = () => {
         updatedBalances[tokenSymbol] = updatedBalances[tokenSymbol] || {
           balance: 0,
           usdPrice: token.usd_price || 0,
-          thumbnail: token.thumbnail || token.logo,
+          thumbnail: token.thumbnail || token.logo || "/client/public/sync.png",
           name: token.name,
         };
         updatedBalances[tokenSymbol].balance += tokenBalance;
@@ -87,7 +87,7 @@ const UserHome = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-32">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-">
       <div className="p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl text-center">
         <h1 className="text-2xl font-bold mb-4">Crypto Wallet Tracker</h1>
         <input
@@ -127,10 +127,10 @@ const UserHome = () => {
             <ul>
               {Object.entries(totalBalances).map(([symbol, data]) => (
                 <li key={symbol} className="flex items-center gap-4 text-gray-300">
-                  {data.thumbnail && <img src={data.thumbnail} alt={symbol} className="w-8 h-8 rounded-full" />}
+                  <img src={data.thumbnail} alt={symbol} className="w-8 h-8 rounded-full" onError={(e) => e.target.src = "/sync.png"} />
                   <div>
-                    <p className="font-semibold">{data.name} ({symbol}): {data.balance.toFixed(2)}</p>
-                    <p className="text-sm text-gray-400">USD Price: ${data.usdPrice}</p>
+                    <p className="font-semibold">{data.name} ({symbol}): {data.balance.toFixed(4)}</p>
+                    <p className="text-sm text-gray-400">USD Price: ${data.usdPrice.toFixed(2)}</p>
                   </div>
                 </li>
               ))}
