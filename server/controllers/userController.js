@@ -12,7 +12,7 @@ function setUser(user) {
     dob: user.dob,
     addressesToTrack: user.addressesToTrack,
   };
-  return jwt.sign(payload, secret, { expiresIn: "1h" });
+  return jwt.sign(payload, secret, { expiresIn: "1d" });
 }
 
 function getUser(token){
@@ -287,3 +287,8 @@ exports.fetchAddresses = async (req, res) => {
     res.status(500).json({ success: false, error: "Server error while fetching the user." });
   }
 };
+
+
+exports.deleteAddress = async (req,res)=>{
+
+}
