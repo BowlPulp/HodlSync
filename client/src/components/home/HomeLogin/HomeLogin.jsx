@@ -34,7 +34,7 @@ const HomeLogin = () => {
       const data = await response.json();
       if (data.success) {
         setMessage("Login successful!");
-        localStorage.setItem("authToken", data.token); // Store token in localStorage
+        // localStorage.setItem("uid", data.token); // Store token in localStorage
         window.location.href = "/user/home"; // Redirect to dashboard after login
       } else {
         setMessage(data.error || "Invalid credentials.");

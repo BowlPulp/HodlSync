@@ -44,7 +44,7 @@ const HomeNavbar = () => {
         } md:flex flex-col md:flex-row gap-6 md:gap-12 absolute md:static bg-gray-800 md:bg-transparent top-20 md:top-0 left-0 w-full md:w-auto p-6 md:p-0`}
       >
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/calculator/home">Calculator</NavLink>
+        <NavLink to="/calculator/home">Calculators</NavLink>
         <NavLink to="/pricing">Pricing</NavLink>
 
         {!isAuthenticated ? (
@@ -94,7 +94,7 @@ const NavLink = ({ to, children }) => {
 
 const JoinButton = () => {
   return (
-    <Link to="/dashboard">
+    <Link to="/user/home">
       <button
         className="relative z-0 flex items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border-[1px] 
           border-neutral-700 px-4 py-1.5 font-medium text-neutral-300 transition-all duration-300

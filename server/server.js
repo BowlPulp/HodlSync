@@ -5,6 +5,11 @@ const connectDB = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
 const app = express();
+const cookieParser = require("cookie-parser");
+
+
+
+app.use(cookieParser());
 
 // Middleware to parse JSON bodies
 app.use(express.json());

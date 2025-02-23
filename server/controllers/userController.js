@@ -96,7 +96,12 @@ exports.loginUser = async (req, res) => {
 
     // Generate JWT token
     const token = setUser(user);
-    res.cookie("uid", token);
+    res.cookie("uid", token, {
+      httpOnly: true,   // Prevents client-side access
+      secure: process.env.NODE_ENV === "production", // Ensures HTTPS in production
+      sameSite: "strict", // Prevents CSRF attacks
+  });
+  
 
     res.status(200).json({
       success: true,
@@ -212,5 +217,73 @@ exports.deleteUser = async (req, res) => {
       success: false,
       error: 'Server error while deleting the user.',
     });
+  }
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("uid", {  
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",  
+    sameSite: "strict",  
+    path: "/"  
+  });
+
+  res.json({ message: "Logged out successfully" });
+};
+
+
+exports.dashboard = (req,res)=>{
+  console.log("Dashboard route hit");
+
+  res.json({ message: "Welcome to your dashboard!", user: req.user })
+};
+
+
+exports.addressAdd = async (req, res) => {
+  try {
+    const { address } = req.body;
+    const email = req.user.email; // Assuming authentication middleware adds `user` to `req`
+
+    if (!address) {
+      return res.status(400).json({ message: "Address is required" });
+    }
+
+    // Use `findOne` instead of `findById`
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Add address to `addressesToTrack` array
+    user.addressesToTrack.push(address);
+    await user.save();
+
+    res.status(200).json({ message: "Address added successfully", addressesToTrack: user.addressesToTrack });
+  } catch (error) {
+    console.error("Error:", error); // Log the actual error
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+exports.fetchAddresses = async (req, res) => {
+  try {
+    const email = req.user?.email; // Ensure req.user exists before accessing email
+    if (!email) {
+      return res.status(401).json({ success: false, error: "Unauthorized: No email found in request." });
+    }
+
+    console.log("Fetching addresses for email:", email); // Debugging log
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found." });
+    }
+
+    console.log("User found:", user); // Debugging log
+
+    res.status(200).json({ success: true, addresses: user.addressesToTrack || [] });
+  } catch (error) {
+    console.error("Error in fetchAddresses:", error); // Logs error in console
+    res.status(500).json({ success: false, error: "Server error while fetching the user." });
   }
 };

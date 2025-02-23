@@ -3,13 +3,20 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const authenticate = require("../middlewares/authMiddleware");
 
-// Create a new user
+// Non Protected Routes
 router.post('/signup', userController.createUser);
-
-// Login a user
 router.post('/login', userController.loginUser);
+router.post("/logout", userController.logout);
 
+router.post('/test', (req,res)=>{
+    res.send("test");
+})
+// Protected Routes
+router.post('/dashboard', authenticate, userController.dashboard);
+router.patch('/add-address', authenticate, userController.addressAdd);
+router.get("/fetch-addresses", authenticate, userController.fetchAddresses);
 // Get all users
 router.get('/users', userController.getAllUsers);
 
