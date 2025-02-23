@@ -120,6 +120,6 @@ const solutions = [
     description:
       "Yes, HODLSync prioritizes user privacy and security. Your account information and crypto data are securely stored and encrypted. We employ industry-standard security measures to protect your sensitive information, ensuring a safe and reliable platform for tracking and managing your crypto portfolio.",
     imgSrc:
-      "https://www.icegif.com/wp-content/uploads/dogecoin-icegif-17.gif",
+      "https://media1.tenor.com/m/zV3Oi999cVAAAAAC/dancing-cheems.gif",
   },
 ];
