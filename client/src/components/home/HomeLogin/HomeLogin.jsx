@@ -91,7 +91,7 @@ const HomeLogin = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2  flex justify-center items-center">
+          <div className="w-full md:w-1/2  flex justify-center items-center hidden md:flex">
             <img src="/login.gif" alt="Login illustration" />
           </div>
         </div>

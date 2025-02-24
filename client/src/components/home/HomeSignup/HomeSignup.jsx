@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import Footer from '../../footer/Footer';
 import HomeNavbar from '../HomeNavbar/HomeNavbar';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const HomeSignup = () => {
+    
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -33,12 +38,15 @@ const HomeSignup = () => {
 
             const data = await response.json();
             if (data.success) {
-                setMessage("User created successfully!");
+                toast.success("User created successfully!");
+                setTimeout(() => {
+                    navigate("/login"); // Redirect after success
+                }, 2000); // Delay for better UX
             } else {
-                setMessage(data.error || "Failed to create user.");
+                toast.error(data.error || "Failed to create user.");
             }
         } catch (error) {
-            setMessage("Error connecting to the server.");
+            toast.error("Error connecting to the server.");
         }
     };
 
@@ -103,7 +111,7 @@ const HomeSignup = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full md:w-1/2  flex justify-center items-center">
+                    <div className="w-full md:w-1/2  flex justify-center items-center hidden md:flex">
                         <img src="/signup.gif" alt="Signup illustration" />
                     </div>
                 </div>

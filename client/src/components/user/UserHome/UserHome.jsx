@@ -117,8 +117,8 @@ const UserHome = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white p-32">
-      <div className="p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white p-4 lg-p-32 ">
+      <div className="p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl text-center mt-32">
         <h1 className="text-2xl font-bold mb-4">Crypto Wallet Tracker</h1>
         <input
           type="text"
@@ -153,7 +153,7 @@ const UserHome = () => {
         <h2 className="text-xl font-semibold text-center mb-4">Tracked Wallets</h2>
         {addresses.length > 0 ? (
           addresses.map((addr, index) => (
-            <div key={index} className="mb-4 p-4 bg-gray-800 rounded-lg shadow-md">
+            <div key={index} className="mb-4 p-4 bg-gray-800 rounded-lg shadow-md break-all">
               <h3 className="text-lg font-semibold text-blue-400">{addr}</h3>
             </div>
           ))
@@ -164,7 +164,7 @@ const UserHome = () => {
 
       <div className="mt-6 w-full max-w-2xl">
         <h2 className="text-xl font-semibold text-center mb-4">Total Balances</h2>
-        <div className="p-4 bg-gray-800 rounded-lg shadow-md">
+        <div className="p-4 bg-gray-800 rounded-lg shadow-md break-all">
           {Object.keys(totalBalances).length > 0 ? (
             <ul>
               {Object.entries(totalBalances).map(([symbol, data]) => (
