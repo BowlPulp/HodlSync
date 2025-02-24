@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Footer from "../../footer/Footer";
 import HomeNavbar from "../HomeNavbar/HomeNavbar";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomeLogin = () => {
   const [formData, setFormData] = useState({
@@ -33,14 +35,14 @@ const HomeLogin = () => {
 
       const data = await response.json();
       if (data.success) {
-        setMessage("Login successful!");
+        toast.success("Login successful!");
         // localStorage.setItem("uid", data.token); // Store token in localStorage
         window.location.href = "/user/home"; // Redirect to dashboard after login
       } else {
-        setMessage(data.error || "Invalid credentials.");
+        toast.error(data.error || "Invalid credentials.");
       }
     } catch (error) {
-      setMessage("Error connecting to the server.");
+      toast.error("Error connecting to the server.");
     }
   };
 

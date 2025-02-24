@@ -30,8 +30,10 @@ const UserHome = () => {
       const res = await axios.get("http://localhost:4000/api/users/fetch-addresses", { withCredentials: true });
       console.log("Fetched Addresses:", res.data.addresses);
       setAddresses(res.data.addresses);
-      res.data.addresses.forEach(fetchUserTokens);
-      fetchNetWorth(res.data.addresses);
+
+      // Fetch tokens and net worth in parallel
+      await Promise.all(res.data.addresses.map(fetchUserTokens));
+      await fetchNetWorth(res.data.addresses);
     } catch (err) {
       console.error("Error fetching addresses:", err);
       setError("Failed to fetch addresses");
@@ -48,7 +50,12 @@ const UserHome = () => {
           },
         }
       );
-      setTokens((prevTokens) => ({ ...prevTokens, [walletAddress]: response.data }));
+
+      setTokens((prevTokens) => ({
+        ...prevTokens,
+        [walletAddress]: response.data,
+      }));
+
       updateTotalBalances(response.data);
     } catch (error) {
       console.error("Error fetching tokens for", walletAddress, error.response?.data || error.message);
@@ -57,35 +64,35 @@ const UserHome = () => {
 
   const fetchNetWorth = async (walletAddresses) => {
     if (!walletAddresses.length) return;
-  
+
     try {
-      let totalNetWorth = 0;
-  
-      for (const walletAddress of walletAddresses) {
-        const response = await axios.get(
-          `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/net-worth?exclude_spam=true&exclude_unverified_contracts=true`,
-          {
-            headers: {
-              "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY,
-            },
-          }
-        );
-        totalNetWorth += response.data.total_networth_usd || 0;
-      }
-  
-      setNetWorth(totalNetWorth); // Only set net worth once after all requests
+      const netWorthResponses = await Promise.all(
+        walletAddresses.map(async (walletAddress) => {
+          const response = await axios.get(
+            `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/net-worth?exclude_spam=true&exclude_unverified_contracts=true`,
+            {
+              headers: {
+                "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY,
+              },
+            }
+          );
+          return response.data.total_networth_usd || 0;
+        })
+      );
+
+      // Sum all net worth values
+      const totalNetWorth = netWorthResponses.reduce((sum, value) => sum + Number(value), 0);
+      setNetWorth(totalNetWorth.toFixed(2));
     } catch (error) {
       console.error("Error fetching net worth:", error.response?.data || error.message);
     }
   };
-  
 
-  
   const updateTotalBalances = (newTokens) => {
     setTotalBalances((prevBalances) => {
       const updatedBalances = { ...prevBalances };
+
       newTokens.forEach((token) => {
-        console.log("Token Price:", token.usd_price); // Debugging log
         const tokenSymbol = token.symbol;
         const tokenBalance = token.balance / Math.pow(10, token.decimals);
         updatedBalances[tokenSymbol] = updatedBalances[tokenSymbol] || {
@@ -97,23 +104,25 @@ const UserHome = () => {
         updatedBalances[tokenSymbol].balance += tokenBalance;
         updatedBalances[tokenSymbol].usdPrice = token.usd_price || 0;
       });
+
       return updatedBalances;
     });
   };
 
-  const handleAddAddress = () => {
-    axios
-      .patch("http://localhost:4000/api/users/add-address", { address }, { withCredentials: true })
-      .then((res) => {
-        alert("Address added successfully");
-        setAddress("");
-        setAddresses((prev) => [...prev, address]);
-        fetchUserTokens(address);
-        fetchNetWorth(address);
-      })
-      .catch((err) => {
-        alert(err.response?.data?.message || "Failed to add address");
-      });
+  const handleAddAddress = async () => {
+    try {
+      await axios.patch("http://localhost:4000/api/users/add-address", { address }, { withCredentials: true });
+
+      alert("Address added successfully");
+      setAddresses((prev) => [...prev, address]);
+      setAddress("");
+
+      // Fetch tokens and net worth for new address
+      await fetchUserTokens(address);
+      await fetchNetWorth([...addresses, address]);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to add address");
+    }
   };
 
   return (
@@ -139,15 +148,14 @@ const UserHome = () => {
 
       <div className="mt-6 w-full max-w-2xl">
         <h2 className="text-xl font-semibold text-center mb-4">Total Net Worth</h2>
-        {netWorth ? (
+        {netWorth !== null ? (
           <div className="p-4 bg-gray-800 rounded-lg shadow-md text-center">
-            <p className="text-lg font-bold">${netWorth.total_networth_usd}</p>
+            <p className="text-lg font-bold">${netWorth}</p>
           </div>
         ) : (
           <p className="text-gray-400 text-center">Fetching net worth...</p>
         )}
       </div>
-
 
       <div className="mt-6 w-full max-w-2xl">
         <h2 className="text-xl font-semibold text-center mb-4">Tracked Wallets</h2>
