@@ -127,13 +127,13 @@ const UserHome = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 text-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-green-900 text-white p-6">
       <div className="flex flex-col lg:flex-row lg:justify-between max-w-7xl mx-auto mt-32 gap-8">
         {/* Left Side: Net Worth, Settings/Add Address, Tracked Wallets */}
         <div className="w-full lg:w-1/3 flex flex-col gap-6">
           {/* Net Worth */}
           <div className="lg:sticky lg:top-6">
-            <h1 className="text-2xl font-bold tracking-tight text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <h1 className="text-2xl font-bold tracking-tight text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">
               Crypto Wallet Tracker
             </h1>
             <h2 className="text-xl font-semibold text-center mt-4 mb-2 text-gray-200">Total Net Worth</h2>
