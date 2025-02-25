@@ -13,6 +13,7 @@ const UserHome = () => {
   const [totalBalances, setTotalBalances] = useState({});
   const [netWorth, setNetWorth] = useState(null);
   const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
+  const [isNewAddressAdded, setIsNewAddressAdded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,65 +30,145 @@ const UserHome = () => {
   }, [navigate]);
 
   const fetchUserAddresses = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000/api/users/fetch-addresses", { withCredentials: true });
-      console.log("Fetched Addresses:", res.data.addresses);
-      setAddresses(res.data.addresses);
+    const lastFetched = localStorage.getItem("lastFetchTime");
+    const cachedAddresses = JSON.parse(localStorage.getItem("cachedAddresses")) || [];
+    const now = Date.now();
+    const CACHE_EXPIRATION = isNewAddressAdded ? 0 : 900000; // Fetch immediately if new address, else 15 mins
 
-      await Promise.all(res.data.addresses.map(fetchUserTokens));
-      await fetchNetWorth(res.data.addresses);
-    } catch (err) {
-      console.error("Error fetching addresses:", err);
-      setError("Failed to fetch addresses");
+    if (lastFetched && now - lastFetched < CACHE_EXPIRATION && cachedAddresses.length > 0) {
+        console.log("Using cached addresses:", cachedAddresses);
+        setAddresses(cachedAddresses);
+        cachedAddresses.forEach(fetchUserTokens);
+        fetchNetWorth(cachedAddresses);
+        return;
     }
-  };
 
-  const fetchUserTokens = async (walletAddress) => {
     try {
-      const response = await axios.get(
-        `https://deep-index.moralis.io/api/v2.2/${walletAddress}/erc20?chain=eth&exclude_spam=true`,
-        {
-          headers: {
-            "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY,
-          },
+        const res = await axios.get("http://localhost:4000/api/users/fetch-addresses", { withCredentials: true });
+        console.log("Fetched Addresses:", res.data.addresses);
+        setAddresses(res.data.addresses);
+
+        await Promise.all(res.data.addresses.map(fetchUserTokens));
+        await fetchNetWorth(res.data.addresses);
+
+        // Save timestamp and cache addresses
+        localStorage.setItem("lastFetchTime", now);
+        localStorage.setItem("cachedAddresses", JSON.stringify(res.data.addresses));
+        setIsNewAddressAdded(false); // Reset flag after fetching
+    } catch (err) {
+        console.error("Error fetching addresses:", err);
+        setError("Failed to fetch addresses");
+
+        if (cachedAddresses.length > 0) {
+            console.log("Using old cached addresses due to API failure");
+            setAddresses(cachedAddresses);
         }
+    }
+};
+
+
+
+const fetchUserTokens = async (walletAddress) => {
+  const cacheKey = `tokens_${walletAddress}`;
+  const lastFetched = localStorage.getItem(`${cacheKey}_time`);
+  const cachedTokens = JSON.parse(localStorage.getItem(cacheKey)) || [];
+  const now = Date.now();
+
+  // Use cached data if available
+  if (lastFetched && now - lastFetched < 900000 && cachedTokens.length > 0) {
+      console.log(`Using cached tokens for ${walletAddress}:`, cachedTokens);
+      setTokens((prevTokens) => ({
+          ...prevTokens,
+          [walletAddress]: cachedTokens,
+      }));
+      updateTotalBalances(cachedTokens);
+      return;
+  }
+
+  try {
+      const response = await axios.get(
+          `https://deep-index.moralis.io/api/v2.2/${walletAddress}/erc20?chain=eth&exclude_spam=true`,
+          {
+              headers: { "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY },
+          }
       );
 
       setTokens((prevTokens) => ({
-        ...prevTokens,
-        [walletAddress]: response.data,
+          ...prevTokens,
+          [walletAddress]: response.data,
       }));
 
       updateTotalBalances(response.data);
-    } catch (error) {
-      console.error("Error fetching tokens for", walletAddress, error.response?.data || error.message);
-    }
-  };
 
-  const fetchNetWorth = async (walletAddresses) => {
-    if (!walletAddresses.length) return;
+      // Save data in localStorage
+      localStorage.setItem(cacheKey, JSON.stringify(response.data));
+      localStorage.setItem(`${cacheKey}_time`, now);
+  } catch (error) {
+      console.error(`Error fetching tokens for ${walletAddress}:`, error.response?.data || error.message);
 
-    try {
+      // Fallback to cached tokens if API fails
+      if (cachedTokens.length > 0) {
+          console.log(`Using old cached tokens for ${walletAddress}`);
+          setTokens((prevTokens) => ({
+              ...prevTokens,
+              [walletAddress]: cachedTokens,
+          }));
+      }
+  }
+};
+
+
+const fetchNetWorth = async (walletAddresses, forceFetch = false) => {
+  if (!walletAddresses.length) return;
+
+  const cacheKey = "cachedNetWorth";
+  const lastFetched = localStorage.getItem(`${cacheKey}_time`);
+  const cachedNetWorth = localStorage.getItem(cacheKey);
+  const cachedAddresses = JSON.parse(localStorage.getItem("cachedAddresses")) || [];
+  const now = Date.now();
+
+  // Check if the addresses have changed
+  const addressesChanged = JSON.stringify(walletAddresses) !== JSON.stringify(cachedAddresses);
+
+  // If no new address and cache is valid, use cached data
+  if (!forceFetch && !addressesChanged && lastFetched && now - lastFetched < 900000 && cachedNetWorth) {
+      console.log("Using cached net worth:", cachedNetWorth);
+      setNetWorth(parseFloat(cachedNetWorth).toFixed(2));
+      return;
+  }
+
+  try {
       const netWorthResponses = await Promise.all(
-        walletAddresses.map(async (walletAddress) => {
-          const response = await axios.get(
-            `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/net-worth?exclude_spam=true&exclude_unverified_contracts=true`,
-            {
-              headers: {
-                "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY,
-              },
-            }
-          );
-          return response.data.total_networth_usd || 0;
-        })
+          walletAddresses.map(async (walletAddress) => {
+              const response = await axios.get(
+                  `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/net-worth?exclude_spam=true&exclude_unverified_contracts=true`,
+                  {
+                      headers: { "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY },
+                  }
+              );
+              return response.data.total_networth_usd || 0;
+          })
       );
 
       const totalNetWorth = netWorthResponses.reduce((sum, value) => sum + Number(value), 0);
       setNetWorth(totalNetWorth.toFixed(2));
-    } catch (error) {
+
+      // Save new addresses and net worth in cache
+      localStorage.setItem("cachedAddresses", JSON.stringify(walletAddresses));
+      localStorage.setItem(cacheKey, totalNetWorth);
+      localStorage.setItem(`${cacheKey}_time`, now);
+  } catch (error) {
       console.error("Error fetching net worth:", error.response?.data || error.message);
-    }
-  };
+
+      // Fallback to cached net worth if API fails
+      if (cachedNetWorth) {
+          console.log("Using old cached net worth");
+          setNetWorth(parseFloat(cachedNetWorth).toFixed(2));
+      }
+  }
+};
+
+
 
   const updateTotalBalances = (newTokens) => {
     setTotalBalances((prevBalances) => {
@@ -112,19 +193,20 @@ const UserHome = () => {
 
   const handleAddAddress = async () => {
     try {
-      await axios.patch("http://localhost:4000/api/users/add-address", { address }, { withCredentials: true });
+        await axios.patch("http://localhost:4000/api/users/add-address", { address }, { withCredentials: true });
 
-      toast.success("Address added successfully");
-      setAddresses((prev) => [...prev, address]);
-      setAddress("");
-      setIsAddAddressOpen(false);
+        toast.success("Address added successfully");
+        setAddresses((prev) => [...prev, address]);
+        setAddress("");
+        setIsAddAddressOpen(false);
 
-      await fetchUserTokens(address);
-      await fetchNetWorth([...addresses, address]);
+        await fetchUserTokens(address);
+        await fetchNetWorth([...addresses, address], true); // Force fetch
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add address");
+        toast.error(err.response?.data?.message || "Failed to add address");
     }
-  };
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-green-900 text-white p-6">
