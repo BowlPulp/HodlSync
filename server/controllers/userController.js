@@ -290,5 +290,5 @@ exports.fetchAddresses = async (req, res) => {
 
 
 exports.deleteAddress = async (req,res)=>{
-
+  
 }
