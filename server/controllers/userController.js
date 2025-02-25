@@ -289,6 +289,37 @@ exports.fetchAddresses = async (req, res) => {
 };
 
 
-exports.deleteAddress = async (req,res)=>{
-  
-}
+// In your backend (e.g., controllers/userController.js)
+
+exports.deleteAddress = async (req, res) => {
+  try {
+    const { address } = req.body; // Address to delete from req.body
+    const email = req.user.email; // Match your auth middleware
+
+    // Validate input
+    if (!address || typeof address !== "string") {
+      return res.status(400).json({ message: "Invalid address provided" });
+    }
+
+    // Find user by email
+    const User = require("../models/User"); // Adjust path to your User model
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the address exists in addressesToTrack
+    if (!user.addressesToTrack.includes(address)) {
+      return res.status(404).json({ message: "Address not found in tracked list" });
+    }
+
+    // Remove the address from addressesToTrack
+    user.addressesToTrack = user.addressesToTrack.filter((addr) => addr !== address);
+    await user.save();
+
+    return res.status(200).json({ message: "Address deleted successfully", addressesToTrack: user.addressesToTrack });
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

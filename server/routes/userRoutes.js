@@ -17,6 +17,7 @@ router.post('/test', (req,res)=>{
 router.post('/dashboard', authenticate, userController.dashboard);
 router.patch('/add-address', authenticate, userController.addressAdd);
 router.get("/fetch-addresses", authenticate, userController.fetchAddresses);
+router.patch("/remove-address", authenticate, userController.deleteAddress);
 // Get all users
 router.get('/users', userController.getAllUsers);
 
