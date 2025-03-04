@@ -80,13 +80,11 @@ const UserHome = () => {
       return;
     }
 
-
     // https://deep-index.moralis.io/api/v2.2/wallets/0xcB1C1FdE09f811B294172696404e88E658659905/tokens?chain=eth
     // https://deep-index.moralis.io/api/v2.2/0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326/erc20?chain=eth
-
     try {
       const response = await axios.get(
-        `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/tokens?chain=eth`,
+        `https://deep-index.moralis.io/api/v2.2/wallets/${walletAddress}/tokens?chain=eth&exclude_spam=true`,
         {
           headers: { "X-API-Key": import.meta.env.VITE_REACT_APP_MORALIS_API_KEY },
         }
@@ -95,9 +93,9 @@ const UserHome = () => {
 
       setTokens((prevTokens) => ({
         ...prevTokens,
-        [walletAddress]: response.data,
+        [walletAddress]: response.data.result,
       }));
-      updateTotalBalances(response.data);
+      updateTotalBalances(response.data.result);
 
       localStorage.setItem(cacheKey, JSON.stringify(response.data));
       localStorage.setItem(`${cacheKey}_time`, now);
@@ -351,7 +349,7 @@ const UserHome = () => {
             return (
               <div
                 key={index}
-                className="p-4 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all"
+                className="p-4 break-all bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -365,7 +363,7 @@ const UserHome = () => {
                     <p className="text-sm text-gray-400">{token.symbol}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-gray-200">{tokenBalance.toFixed(4)}</p>
+                    <p className="font-medium text-gray-200">{tokenBalance.toFixed(2)}</p>
                     <p className="text-sm text-blue-400">{formatUSD(usdValue)}</p>
                   </div>
                 </div>
@@ -414,7 +412,7 @@ const UserHome = () => {
                   onError={(e) => { e.target.src = "/sync.png" }}
                 />
                 <h4 className="text-sm font-medium text-gray-300">{symbol}</h4>
-                <p className="text-lg font-bold text-blue-400">{data.balance.toFixed(4)}</p>
+                <p className="text-lg font-bold text-blue-400">{data.balance.toFixed(2)}</p>
                 <p className="text-xs text-gray-400">{formatUSD(data.usdValue)}</p>
               </div>
             ))}
@@ -454,7 +452,7 @@ const UserHome = () => {
                         <p className="text-xs text-gray-400">{symbol}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium text-gray-200">{data.balance.toFixed(4)}</p>
+                        <p className="font-medium text-gray-200">{data.balance.toFixed(3)}</p>
                         <p className="text-xs text-blue-400">{formatUSD(data.usdValue)}</p>
                       </div>
                     </div>
