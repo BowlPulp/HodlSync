@@ -8,11 +8,9 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <BrowserRouter>   {/* Wrap your App component with BrowserRouter */}
       <App />
       <ToastContainer/>
      <ScrollToTop />
-    </BrowserRouter>
-  </StrictMode>,
+    </BrowserRouter>,
 );
