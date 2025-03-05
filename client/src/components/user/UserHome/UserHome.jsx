@@ -48,6 +48,7 @@ const UserHome = () => {
         setTotalBalances({});
         setNetWorth(null);
       } else {
+        setTokens({});
         await Promise.all(res.data.addresses.map(fetchUserTokens));
         await fetchNetWorth(res.data.addresses);
       }
@@ -317,6 +318,9 @@ const UserHome = () => {
     // Clear cache
     localStorage.removeItem("cachedNetWorth");
     localStorage.removeItem("cachedNetWorth_time");
+    setTokens({});
+    setTotalBalances({});
+    setNetWorth(null);
     Object.keys(tokens).forEach(address => {
       localStorage.removeItem(`tokens_${address}`);
       localStorage.removeItem(`tokens_${address}_time`);
