@@ -11,7 +11,7 @@ const UserNavbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://54.145.14.15:4000/api/users/logout", {}, { withCredentials: true });
+      await axios.post("http://localhost:4000/api/users/logout", {}, { withCredentials: true });
       navigate("/"); // Redirect to home after logout
     } catch (error) {
       console.error("Logout failed:", error);

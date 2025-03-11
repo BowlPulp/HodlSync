@@ -24,7 +24,7 @@ const UserHome = () => {
 
   useEffect(() => {
     axios
-      .post("http://54.145.14.15:4000/api/users/dashboard", {}, { withCredentials: true })
+      .post("http://localhost:4000/api/users/dashboard", {}, { withCredentials: true })
       .then((res) => {
         setMessage(res.data.message);
         fetchUserAddresses();
@@ -38,7 +38,7 @@ const UserHome = () => {
   const fetchUserAddresses = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("http://54.145.14.15:4000/api/users/fetch-addresses", { withCredentials: true });
+      const res = await axios.get("http://localhost:4000/api/users/fetch-addresses", { withCredentials: true });
       console.log("Fetched Addresses from API:", res.data.addresses);
       setAddresses(res.data.addresses);
 
@@ -192,7 +192,7 @@ const UserHome = () => {
 
     try {
       setIsLoading(true);
-      await axios.patch("http://54.145.14.15:4000/api/users/add-address", { address }, { withCredentials: true });
+      await axios.patch("http://localhost:4000/api/users/add-address", { address }, { withCredentials: true });
       toast.success("Address added successfully");
       setAddress("");
       setIsAddAddressOpen(false);
@@ -208,7 +208,7 @@ const UserHome = () => {
     try {
       setIsLoading(true);
       await axios.patch(
-        "http://54.145.14.15:4000/api/users/remove-address",
+        "http://localhost:4000/api/users/remove-address",
         { address: addressToDelete },
         { withCredentials: true }
       );
