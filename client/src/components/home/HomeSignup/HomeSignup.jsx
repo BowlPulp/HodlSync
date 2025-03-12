@@ -111,7 +111,7 @@ const HomeSignup = () => {
         delete submitData.confirmPassword;
         
         try {
-            const response = await fetch("http://localhost:4000/api/users/signup", {
+            const response = await fetch("https://hodlsync-2.onrender.com/api/users/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -373,15 +373,15 @@ const HomeSignup = () => {
                             
                             <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm p-6 rounded-xl shadow-lg">
                                 <div className="text-center">
-                                    <h3 className="text-xl font-bold text-white mb-2">Join 25,000+ Users Today</h3>
+                                    <h3 className="text-xl font-bold text-white mb-2">Be among the first one!</h3>
                                     <div className="flex justify-center space-x-4 mt-4">
                                         <div className="text-center">
-                                            <div className="text-3xl font-bold text-white">150+</div>
+                                            <div className="text-3xl font-bold text-white">350k+</div>
                                             <div className="text-sm text-gray-300">Supported Coins</div>
                                         </div>
                                         <div className="text-center">
-                                            <div className="text-3xl font-bold text-white">10+</div>
-                                            <div className="text-sm text-gray-300">Blockchains</div>
+                                            <div className="text-3xl font-bold text-white">1</div>
+                                            <div className="text-sm text-gray-300">Network</div>
                                         </div>
                                         <div className="text-center">
                                             <div className="text-3xl font-bold text-white">24/7</div>
