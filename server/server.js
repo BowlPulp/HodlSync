@@ -14,10 +14,13 @@ app.use(cookieParser());
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
 app.use(cors({
   origin: "https://www.hodlsync.com",
-  credentials: true // Allows cookies in requests
+  credentials: true, // Required for cookies
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 
 
 // Connect to the MongoDB database

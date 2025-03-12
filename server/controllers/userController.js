@@ -98,8 +98,9 @@ exports.loginUser = async (req, res) => {
     const token = setUser(user);
     res.cookie("uid", token, {
       httpOnly: true,   // Prevents client-side access
-      secure: process.env.NODE_ENV === "production", // Ensures HTTPS in production
-      sameSite: "strict", // Prevents CSRF attacks
+      secure: true, // Ensures HTTPS in production
+      sameSite: "none", // Prevents CSRF attacks
+      domain: ".hodlsync.com", // Ensures subdomains work too
   });
   
 
