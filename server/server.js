@@ -1,4 +1,3 @@
-// app.js
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/database');
@@ -7,21 +6,16 @@ const cors = require('cors');
 const app = express();
 const cookieParser = require("cookie-parser");
 
-
-
 app.use(cookieParser());
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use(cors({
-  origin: "https://www.hodlsync.com",
+  origin: process.env.VITE_REACT_APP_FRONTEND_PORT,
   credentials: true, // Required for cookies
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
-
-
 
 // Connect to the MongoDB database
 connectDB();

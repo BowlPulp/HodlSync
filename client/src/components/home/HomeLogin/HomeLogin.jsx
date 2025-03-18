@@ -50,7 +50,7 @@ const HomeLogin = () => {
     setLoading(true);
     
     try {
-      const response = await fetch("https://hodlsync-2.onrender.com/api/users/login", {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

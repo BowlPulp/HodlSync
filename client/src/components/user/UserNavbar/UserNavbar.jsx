@@ -11,7 +11,7 @@ const UserNavbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://hodlsync-2.onrender.com/api/users/logout", {}, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/logout`, {}, { withCredentials: true });
       navigate("/"); // Redirect to home after logout
     } catch (error) {
       console.error("Logout failed:", error);

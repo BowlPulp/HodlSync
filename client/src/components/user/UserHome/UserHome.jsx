@@ -24,7 +24,7 @@ const UserHome = () => {
 
   useEffect(() => {
     axios
-      .post("https://hodlsync-2.onrender.com/api/users/dashboard", {}, { withCredentials: true })
+      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/dashboard`, {}, { withCredentials: true })
       .then((res) => {
         setMessage(res.data.message);
         fetchUserAddresses();
@@ -38,7 +38,7 @@ const UserHome = () => {
   const fetchUserAddresses = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("https://hodlsync-2.onrender.com/api/users/fetch-addresses", { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/fetch-addresses`, { withCredentials: true });
       console.log("Fetched Addresses from API:", res.data.addresses);
       setAddresses(res.data.addresses);
 
@@ -192,7 +192,7 @@ const UserHome = () => {
 
     try {
       setIsLoading(true);
-      await axios.patch("https://hodlsync-2.onrender.com/api/users/add-address", { address }, { withCredentials: true });
+      await axios.patch(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/add-address`, { address }, { withCredentials: true });
       toast.success("Address added successfully");
       setAddress("");
       setIsAddAddressOpen(false);
@@ -208,7 +208,7 @@ const UserHome = () => {
     try {
       setIsLoading(true);
       await axios.patch(
-        "https://hodlsync-2.onrender.com/api/users/remove-address",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/remove-address`,
         { address: addressToDelete },
         { withCredentials: true }
       );

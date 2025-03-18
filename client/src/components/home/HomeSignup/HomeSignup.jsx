@@ -111,7 +111,7 @@ const HomeSignup = () => {
         delete submitData.confirmPassword;
         
         try {
-            const response = await fetch("https://hodlsync-2.onrender.com/api/users/signup", {
+            const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
