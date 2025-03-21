@@ -327,3 +327,15 @@ exports.deleteAddress = async (req, res) => {
     return res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+
+exports.testCookie = async(req,res)=>{
+  res.cookie("test", "hello", { 
+    httpOnly: true, 
+    secure: true, 
+    sameSite: "None", 
+    path: "/"
+  });
+  res.send("Cookie sent!");
+};
