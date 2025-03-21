@@ -5,11 +5,12 @@ const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
 const app = express();
 const cookieParser = require("cookie-parser");
-
+const morgan = require('morgan')
 app.use(cookieParser());
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(morgan('dev'));
 
 app.use(cors({
   origin: process.env.VITE_REACT_APP_FRONTEND_PORT,
