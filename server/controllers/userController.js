@@ -96,13 +96,15 @@ exports.loginUser = async (req, res) => {
 
     // Generate JWT token
     const token = setUser(user);
-    res.cookie("uid", token, {
-      httpOnly: true,   // Prevents client-side access
-      secure: true, // Ensures HTTPS in production
-      sameSite: "none", // Prevents CSRF attacks
-      path: "/",       // Ensures cookies are sent on all routes
-      // domain: ".hodlsync.com", // Ensures subdomains work too
-  });
+    res.cookie("uid", token, { 
+      httpOnly: true, 
+      secure: true, 
+      sameSite: "None", 
+      domain: "hodlsync.com",
+      path: "/"
+    });
+    console.log("Set-Cookie Header Sent:", res.getHeaders()["set-cookie"]);
+    
   
 
     res.status(200).json({
