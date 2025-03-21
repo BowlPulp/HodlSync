@@ -100,6 +100,7 @@ exports.loginUser = async (req, res) => {
       httpOnly: true,   // Prevents client-side access
       secure: true, // Ensures HTTPS in production
       sameSite: "none", // Prevents CSRF attacks
+      path: "/",       // Ensures cookies are sent on all routes
       // domain: ".hodlsync.com", // Ensures subdomains work too
   });
   
