@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended:false}));
 app.use(morgan('dev'));
 
 app.use(cors({
-  origin: process.env.VITE_REACT_APP_FRONTEND_PORT,
+  origin: process.env.FRONTEND_PORT,
   credentials: true, // Required for cookies
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
