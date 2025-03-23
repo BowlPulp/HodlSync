@@ -24,6 +24,7 @@ import ArbitrageCalculator from './components/calculator/ArbitrageCalculator/Arb
 import CurrencyConverter from './components/calculator/CurrencyCalculator/CurrencyCalculator'
 import HomeSignup from './components/home/HomeSignup/HomeSignup'
 import HomeLogin from './components/home/HomeLogin/HomeLogin'
+import TestCookie from './components/test/TestCookie'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,6 +38,7 @@ function App() {
     <Route path="/contact" element={<HomeContact/>}/>
     <Route path="/signup" element={<HomeSignup/>}/>
     <Route path='/login' element={<HomeLogin/>}/>
+    <Route path='/test-cookie' element={<TestCookie/>}/>
 
     <Route path="/user/" element={<UserLayout />}>
       <Route path="home" element={<UserHome/>} />
