@@ -22,15 +22,15 @@ router.patch("/remove-address", authenticate, userController.deleteAddress);
 //Test Route
 router.get('/test-cookie', userController.testCookie);
 // Get all users
-router.get('/users', userController.getAllUsers);
+// router.get('/users', userController.getAllUsers);
 
 // Get a user by ID
-router.get('/:id', userController.getUserById);
+// router.get('/:id', userController.getUserById);
 
 // Update a user by ID
-router.put('/:id', userController.updateUser);
+// router.put('/:id', userController.updateUser);
 
 // Delete a user by ID
-router.delete('/:id', userController.deleteUser);
+// router.delete('/:id', userController.deleteUser);
 
 module.exports = router;

@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended:false}));
 app.use(morgan('dev'));
 
 app.use(cors({
-  origin: process.env.FRONTEND_PORT,
+  origin: "https://www.hodlsync.com",
   credentials: true, // Required for cookies
   allowedHeaders: ["Content-Type", "Authorization"],
 }));

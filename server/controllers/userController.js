@@ -124,105 +124,105 @@ exports.loginUser = async (req, res) => {
 /**
  * Get all users.
  */
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({
-      success: true,
-      data: users,
-    });
-  } catch (error) {
-    console.error('Error fetching users:', error.message);
-    res.status(500).json({
-      success: false,
-      error: 'Server error while fetching users.',
-    });
-  }
-};
+// exports.getAllUsers = async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.status(200).json({
+//       success: true,
+//       data: users,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching users:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       error: 'Server error while fetching users.',
+//     });
+//   }
+// };
 
 /**
  * Get a single user by ID.
  */
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found.',
-      });
-    }
-    res.status(200).json({
-      success: true,
-      data: user,
-    });
-  } catch (error) {
-    console.error('Error fetching user:', error.message);
-    res.status(500).json({
-      success: false,
-      error: 'Server error while fetching the user.',
-    });
-  }
-};
+// exports.getUserById = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         error: 'User not found.',
+//       });
+//     }
+//     res.status(200).json({
+//       success: true,
+//       data: user,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching user:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       error: 'Server error while fetching the user.',
+//     });
+//   }
+// };
 
 /**
  * Update a user by ID.
  */
-exports.updateUser = async (req, res) => {
-  try {
-    const updatedData = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, updatedData, {
-      new: true, // Return the updated document
-      runValidators: true, // Validate the update against the schema
-    });
+// exports.updateUser = async (req, res) => {
+//   try {
+//     const updatedData = req.body;
+//     const user = await User.findByIdAndUpdate(req.params.id, updatedData, {
+//       new: true, // Return the updated document
+//       runValidators: true, // Validate the update against the schema
+//     });
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found.',
-      });
-    }
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         error: 'User not found.',
+//       });
+//     }
 
-    res.status(200).json({
-      success: true,
-      data: user,
-      message: 'User updated successfully!',
-    });
-  } catch (error) {
-    console.error('Error updating user:', error.message);
-    res.status(500).json({
-      success: false,
-      error: 'Server error while updating the user.',
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       data: user,
+//       message: 'User updated successfully!',
+//     });
+//   } catch (error) {
+//     console.error('Error updating user:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       error: 'Server error while updating the user.',
+//     });
+//   }
+// };
 
 /**
  * Delete a user by ID.
  */
-exports.deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
+// exports.deleteUser = async (req, res) => {
+//   try {
+//     const user = await User.findByIdAndDelete(req.params.id);
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found.',
-      });
-    }
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         error: 'User not found.',
+//       });
+//     }
 
-    res.status(200).json({
-      success: true,
-      message: 'User deleted successfully!',
-    });
-  } catch (error) {
-    console.error('Error deleting user:', error.message);
-    res.status(500).json({
-      success: false,
-      error: 'Server error while deleting the user.',
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: 'User deleted successfully!',
+//     });
+//   } catch (error) {
+//     console.error('Error deleting user:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       error: 'Server error while deleting the user.',
+//     });
+//   }
+// };
 
 exports.logout = (req, res) => {
   res.clearCookie("uid", {  
