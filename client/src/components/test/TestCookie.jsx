@@ -8,7 +8,7 @@ export default function TestCookie() {
   const testCookie = async () => {
     try {
       // Send request to /test-cookie
-      await axios.get("https://hodlsync-2.onrender.com/test-cookie", {
+      await axios.get("https://hodlsync-2.onrender.com/api/users/test-cookie", {
         withCredentials: true, // ✅ Ensures cookies are sent & received
       });
 
