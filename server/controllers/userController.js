@@ -100,7 +100,7 @@ exports.loginUser = async (req, res) => {
       httpOnly: true, 
       secure: true, 
       sameSite: "None", 
-      domain: "https://www.hodlsync.com",
+      domain: "www.hodlsync.com",
       path: "/"
     });
     console.log("Set-Cookie Header Sent:", res.getHeaders()["set-cookie"]);
