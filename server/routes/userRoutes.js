@@ -14,13 +14,13 @@ router.post('/test', (req,res)=>{
     res.send("test");
 })
 // Protected Routes
-router.post('/dashboard', authenticate, userController.dashboard);
+router.get('/dashboard', authenticate, userController.dashboard);
 router.patch('/add-address', authenticate, userController.addressAdd);
 router.get("/fetch-addresses", authenticate, userController.fetchAddresses);
 router.patch("/remove-address", authenticate, userController.deleteAddress);
 
 //Test Route
-router.post('/test-cookie', userController.testCookie);
+router.get('/test-cookie', userController.testCookie);
 // Get all users
 // router.get('/users', userController.getAllUsers);
 

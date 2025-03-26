@@ -24,7 +24,7 @@ const UserHome = () => {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/dashboard`, {}, { withCredentials: true })
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/dashboard`, { withCredentials: true })
       .then((res) => {
         setMessage(res.data.message);
         fetchUserAddresses();
