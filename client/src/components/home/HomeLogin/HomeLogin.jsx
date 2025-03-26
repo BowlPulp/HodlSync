@@ -13,6 +13,22 @@ const HomeLogin = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Prompt for third-party cookies on component mount
+  useEffect(() => {
+    toast.info(
+      "If you have trouble logging in, try enabling third-party cookies in your browser settings.", 
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+  }, []);
+
   // Particle animation setup
   const [particles, setParticles] = useState([]);
   
