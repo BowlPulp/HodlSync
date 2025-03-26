@@ -20,7 +20,7 @@ router.get("/fetch-addresses", authenticate, userController.fetchAddresses);
 router.patch("/remove-address", authenticate, userController.deleteAddress);
 
 //Test Route
-router.get('/test-cookie', userController.testCookie);
+router.post('/test-cookie', userController.testCookie);
 // Get all users
 // router.get('/users', userController.getAllUsers);
 
