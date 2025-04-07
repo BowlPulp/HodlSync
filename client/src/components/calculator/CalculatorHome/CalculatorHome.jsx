@@ -18,6 +18,7 @@ const CalculatorHome = () => {
     { name: "Currency Conversion Calculator", path: "/calculator/currency-calculator", description: "Convert currencies instantly with real-time exchange rates. Easily switch between different currencies for accurate conversions.", icon: "💱" },
     { name: "Retirement Calculator", path: "/calculator/retirement-calculator", description: "Plan your retirement savings and estimate how much you need to save monthly to achieve your retirement goals.", icon: "👴" },
     { name: "Tax Calculator", path: "/calculator/tax-calculator", description: "Estimate your income tax liability and plan your tax savings investments effectively.", icon: "📝" },
+    { name: "AI Calculator", path: "/calculator/ai-calculator", description: "Ai Based Calculation", icon: "📝" },
   ];
 
   // Filter calculators based on search query

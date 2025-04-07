@@ -25,6 +25,7 @@ import CurrencyConverter from './components/calculator/CurrencyCalculator/Curren
 import HomeSignup from './components/home/HomeSignup/HomeSignup'
 import HomeLogin from './components/home/HomeLogin/HomeLogin'
 import TestCookie from './components/test/TestCookie'
+import AICalculator from './components/calculator/AICalculator/AICalculator'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -60,6 +61,7 @@ function App() {
       <Route path='target-amount-calculator' element={<TargetAmountCalculator/>}/>
       <Route path='arbitrage-calculator' element={<ArbitrageCalculator/>}/>
       <Route path='currency-calculator' element={<CurrencyConverter/>}/>
+      <Route path='ai-calculator' element={<AICalculator/>}/>
     </Route>
 
     <Route path='*' element={<NotFound/>}/>

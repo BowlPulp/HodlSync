@@ -13,6 +13,7 @@ router.post("/logout", userController.logout);
 router.post('/test', (req,res)=>{
     res.send("test");
 })
+
 // Protected Routes
 router.get('/dashboard', authenticate, userController.dashboard);
 router.patch('/add-address', authenticate, userController.addressAdd);
