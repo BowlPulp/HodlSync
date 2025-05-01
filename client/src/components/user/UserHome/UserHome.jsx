@@ -1526,7 +1526,7 @@ const UserHome = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <div className="container mx-auto p-4 sm:p-6 max-w-7xl">
         {/* Header */}
-        <header className="mb-8 pt-4">
+        <header className="mb-8 pt-4 mt-16">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold text-teal-300">Portfolio Tracker</h1>
