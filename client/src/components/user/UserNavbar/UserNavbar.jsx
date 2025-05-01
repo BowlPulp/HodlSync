@@ -42,7 +42,7 @@ const UserNavbar = () => {
       <div className={`${isMenuOpen ? "flex" : "hidden"} md:flex flex-col md:flex-row gap-6 md:gap-12 absolute md:static bg-gray-800 md:bg-transparent top-20 md:top-0 left-0 w-full md:w-auto p-6 md:p-0`}>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/calculator/home">Calculators</NavLink>
-        <NavLink to="/pricing">Pricing</NavLink>
+        <NavLink to="/news">News</NavLink>
 
         {/* Gas Fee Tracker Button */}
         <div className="relative">

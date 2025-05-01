@@ -26,6 +26,7 @@ import HomeSignup from './components/home/HomeSignup/HomeSignup'
 import HomeLogin from './components/home/HomeLogin/HomeLogin'
 import TestCookie from './components/test/TestCookie'
 import AICalculator from './components/calculator/AICalculator/AICalculator'
+import HomeNews from './components/home/HomeNews/HomeNews'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -40,6 +41,7 @@ function App() {
     <Route path="/signup" element={<HomeSignup/>}/>
     <Route path='/login' element={<HomeLogin/>}/>
     <Route path='/test-cookie' element={<TestCookie/>}/>
+    <Route path='/news' element={<HomeNews/>}/>
 
     <Route path="/user/" element={<UserLayout />}>
       <Route path="home" element={<UserHome/>} />

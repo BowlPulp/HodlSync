@@ -16,6 +16,9 @@ const Footer = () => {
             <a href="/privacy" className="hover:text-gray-200">
               Privacy Policy
             </a>
+            <a href="/pricing" className="hover:text-gray-200">
+              Pricing
+            </a>
           </div>
 
           {/* Copyright */}
