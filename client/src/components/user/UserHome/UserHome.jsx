@@ -1532,7 +1532,7 @@ const UserHome = () => {
               <h1 className="text-3xl font-bold text-teal-300">Portfolio Tracker</h1>
               <p className="text-teal-500 mt-1">{message}</p>
             </div>
-            <button
+            {/* <button
               onClick={() => {
                 axios
                   .get(`${import.meta.env.VITE_REACT_APP_BACKEND_PORT}api/users/logout`, { withCredentials: true })
@@ -1547,7 +1547,7 @@ const UserHome = () => {
               className="p-2 px-6 bg-gray-800 hover:bg-gray-700 rounded-lg transition-all text-sm font-medium border border-gray-700"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </header>
 
