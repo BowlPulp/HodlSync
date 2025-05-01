@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { Fuel } from "lucide-react";
 
 const HomeNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Placeholder for auth state
+  const [showGasTracker, setShowGasTracker] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleGasTracker = () => setShowGasTracker(!showGasTracker);
   const handleLogout = () => {
     setIsAuthenticated(false);
     console.log("User logged out");
@@ -43,14 +44,28 @@ const HomeNavbar = () => {
           isMenuOpen ? "flex" : "hidden"
         } md:flex flex-col md:flex-row gap-6 md:gap-12 absolute md:static bg-gray-800 md:bg-transparent top-20 md:top-0 left-0 w-full md:w-auto p-6 md:p-0`}
       >
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/calculator/home">Calculators</NavLink>
-        <NavLink to="/pricing">Pricing</NavLink>
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/calculator/home">Calculators</NavLink>
+        <NavLink href="/pricing">Pricing</NavLink>
+
+        {/* Gas Fee Tracker Button */}
+        <div className="relative">
+          <button
+            onClick={toggleGasTracker}
+            className="flex items-center gap-1 text-neutral-100 hover:text-neutral-50"
+          >
+            <Fuel size={16} />
+            <span>Gas Tracker</span>
+          </button>
+          
+          {/* Gas Tracker Dropdown */}
+          {showGasTracker && <GasTracker />}
+        </div>
 
         {!isAuthenticated ? (
           <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/signup">Signup</NavLink>
+            <NavLink href="/login">Login</NavLink>
+            <NavLink href="/signup">Signup</NavLink>
           </>
         ) : (
           <>
@@ -69,6 +84,97 @@ const HomeNavbar = () => {
   );
 };
 
+const GasTracker = () => {
+  const [gasData, setGasData] = useState({
+    low: null,
+    average: null,
+    high: null,
+    loading: true,
+    error: null,
+  });
+
+  useEffect(() => {
+    const fetchGasData = async () => {
+      try {
+        const response = await fetch('https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=159SZWREAFHM4R82B42X478GMCFGDI1VX1');
+        const data = await response.json();
+        console.log(data);
+        setGasData(data);
+      }
+      catch(error){
+        console.log(error);
+      }
+    };
+    fetchGasData();
+    // Set up polling every 30 seconds
+    const interval = setInterval(fetchGasData, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Loading state
+  if (gasData.loading) {
+    return (
+      <div className="absolute top-10 right-0 w-64 bg-gray-600 rounded-lg shadow-lg p-4 text-black">
+        <div className="flex items-center justify-center space-x-2 py-2">
+          <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+          <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse delay-100"></div>
+          <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse delay-200"></div>
+        </div>
+        <p className="text-center text-sm mt-2">Loading gas prices...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (gasData.error) {
+    return (
+      <div className="absolute top-10 right-0 w-64 bg-gray-600 rounded-lg shadow-lg p-4 text-black">
+        <p className="text-red-400 text-sm">{gasData.error}</p>
+        <p className="text-xs mt-1">Please try again later</p>
+      </div>
+    );
+  }
+
+  // Gas price display
+  return (
+    <div className="absolute top-10 right-0 w-64 bg-gray-600 rounded-lg shadow-lg p-4 text-white z-20">
+      <h3 className="text-sm font-bold border-b border-gray-700 pb-2 mb-3">Ethereum Gas Prices (Gwei)</h3>
+      
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="text-xs flex items-center">
+            <div className="w-2 h-2 rounded-full bg-green-400 mr-2"></div>
+            Low:
+          </span>
+          <span className="font-medium">{gasData.result.ProposeGasPrice}</span>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <span className="text-xs flex items-center">
+            <div className="w-2 h-2 rounded-full bg-yellow-400 mr-2"></div>
+            Average:
+          </span>
+          <span className="font-medium">{gasData.result.SafeGasPrice}</span>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <span className="text-xs flex items-center">
+            <div className="w-2 h-2 rounded-full bg-red-400 mr-2"></div>
+            High:
+          </span>
+          <span className="font-medium">{gasData.result.FastGasPrice}</span>
+        </div>
+      </div>
+      
+      <div className="text-xs text-gray-400 mt-3 pt-2 border-t border-gray-700">
+        <p>Last updated: {new Date().toLocaleTimeString()}</p>
+        <p className="mt-1">Updates every 30 seconds</p>
+      </div>
+    </div>
+  );
+};
+
 const Logo = () => {
   return (
     <div className="flex items-center gap-2">
@@ -78,23 +184,21 @@ const Logo = () => {
   );
 };
 
-const NavLink = ({ to, children }) => {
+const NavLink = ({ href, children }) => {
   return (
-    <Link to={to} className="block overflow-hidden">
-      <motion.div
-        whileHover={{ y: -5 }}
-        transition={{ ease: "easeOut", duration: 0.3 }}
-        className="h-[20px] flex items-center"
+    <a href={href} className="block overflow-hidden">
+      <div
+        className="h-[20px] flex items-center hover:-translate-y-1 transition-transform duration-300 ease-out"
       >
         <span className="text-neutral-100 hover:text-neutral-50">{children}</span>
-      </motion.div>
-    </Link>
+      </div>
+    </a>
   );
 };
 
 const JoinButton = () => {
   return (
-    <Link to="/user/home">
+    <a href="/user/home">
       <button
         className="relative z-0 flex items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border-[1px] 
           border-neutral-700 px-4 py-1.5 font-medium text-neutral-300 transition-all duration-300
@@ -112,7 +216,7 @@ const JoinButton = () => {
       >
         Dashboard
       </button>
-    </Link>
+    </a>
   );
 };
 
