@@ -46,7 +46,7 @@ const HomeNavbar = () => {
       >
         <NavLink href="/">Home</NavLink>
         <NavLink href="/calculator/home">Calculators</NavLink>
-        <NavLink href="/news">News</NavLink>
+        <NavLink href="/news">Newswwa</NavLink>
 
         {/* Gas Fee Tracker Button */}
         <div className="relative">
