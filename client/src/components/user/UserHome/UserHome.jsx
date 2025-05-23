@@ -1575,7 +1575,7 @@ const UserHome = () => {
             >
               Tokens
             </button>
-            <button
+            {/* <button
               onClick={() => setActiveTab("transactions")}
               className={`pb-2 font-medium transition-all border-b-2 ${
                 activeTab === "transactions"
@@ -1585,7 +1585,7 @@ const UserHome = () => {
               disabled={!selectedAddress}
             >
               Transactions
-            </button>
+            </button> */}
             <button
               onClick={() => setActiveTab("nfts")}
               className={`pb-2 font-medium transition-all border-b-2 ${
