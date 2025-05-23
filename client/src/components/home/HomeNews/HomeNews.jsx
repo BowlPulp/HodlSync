@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ExternalLink, Loader, RefreshCw } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
 import HomeNavbar from '../HomeNavbar/HomeNavbar';
 import Footer from '../../footer/Footer';
 
@@ -62,7 +63,6 @@ export default function HomeNews() {
 
     setLoading(true);
     try {
-      // Replace YOUR_API_KEY with your actual rss2json.com API key
       const response = await fetch(
         'https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=cryptocurrency',
         { signal: controller.signal }
@@ -145,101 +145,173 @@ export default function HomeNews() {
     [news, page]
   );
 
+  // Animation variants for news articles
+  const articleVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' }
+    }),
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+  };
+
+  // Animation for buttons
+  const buttonVariants = {
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95 }
+  };
+
+  // Animation for refresh button pulse
+  const refreshVariants = {
+    animate: { scale: [1, 1.1, 1], transition: { duration: 0.8, repeat: Infinity, repeatType: 'reverse' } }
+  };
+
   return (
     <>
       <HomeNavbar />
       <div className="w-full p-6 bg-gradient-to-br from-green-900 via-gray-800 to-black shadow-2xl">
         <div className="flex justify-between items-center mb-8 mt-20">
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Crypto News</h1>
-          <button
+          <motion.h1 
+            className="text-4xl font-extrabold text-white tracking-tight"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Crypto News
+          </motion.h1>
+          <motion.button
             onClick={handleRefresh}
             disabled={loading || (lastFetchTime && Date.now() - lastFetchTime < DEBOUNCE_TIME)}
             className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            animate={loading ? 'animate' : ''}
+            {...(loading && { variants: refreshVariants })}
           >
             <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
             <span className="font-medium">Refresh</span>
-          </button>
+          </motion.button>
         </div>
 
         {loading ? (
-          <div className="flex justify-center items-center h-64">
+          <motion.div 
+            className="flex justify-center items-center h-64"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <Loader size={40} className="text-indigo-400 animate-spin" />
             <span className="ml-3 text-lg text-indigo-200 font-medium">Loading latest crypto news...</span>
-          </div>
+          </motion.div>
         ) : error ? (
-          <div className="bg-red-900 bg-opacity-30 border border-red-500 rounded-lg p-5 text-red-200 text-center">
+          <motion.div 
+            className="bg-red-900 bg-opacity-30 border border-red-500 rounded-lg p-5 text-red-200 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {error}
-          </div>
+          </motion.div>
         ) : (
           <div className="space-y-6">
-            {displayedNews.length > 0 ? displayedNews.map((item, index) => (
-              <article 
-                key={index} 
-                className="bg-gray-800 bg-opacity-70 p-6 rounded-xl hover:bg-gray-700 transition-all duration-300 border border-gray-600 shadow-lg hover:shadow-xl"
-              >
-                <div className="flex items-start gap-5">
-                  
-               
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-semibold text-white mb-2 leading-tight hover:text-indigo-300 transition-colors duration-200">
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
-                    </h2>
-                    <p className="text-gray-200 text-base mb-4 line-clamp-3">{stripHtml(item.description)}</p>
-
-                    <div className="flex justify-between items-center text-sm">
-                      <div className="flex items-center gap-3">
-                        <span className="text-indigo-400 font-medium">{item.author || extractSource(item.description, item.title)}</span>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-400">{item.pubDate ? formatRelativeTime(item.pubDate) : 'Unknown date'}</span>
-                      </div>
-
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-medium transition-colors duration-200"
+            <AnimatePresence>
+              {displayedNews.length > 0 ? displayedNews.map((item, index) => (
+                <motion.article 
+                  key={`${item.link}-${page}`} // Unique key for pagination
+                  className="bg-gray-800 bg-opacity-70 p-6 rounded-xl hover:bg-gray-700 transition-all duration-300 border border-gray-600 shadow-lg hover:shadow-xl"
+                  variants={articleVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  custom={index}
+                >
+                  <div className="flex items-start gap-5">
+                    <div className="flex-1">
+                      <motion.h2 
+                        className="text-2xl font-semibold text-white mb-2 leading-tight hover:text-indigo-300 transition-colors duration-200"
+                        whileHover={{ x: 5 }}
                       >
-                        Read more <ExternalLink size={14} />
-                      </a>
+                        <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                      </motion.h2>
+                      <p className="text-gray-200 text-base mb-4 line-clamp-3">{stripHtml(item.description)}</p>
+
+                      <div className="flex justify-between items-center text-sm">
+                        <div className="flex items-center gap-3">
+                          <span className="text-indigo-400 font-medium">{item.author || extractSource(item.description, item.title)}</span>
+                          <span className="text-gray-400">•</span>
+                          <span className="text-gray-400">{item.pubDate ? formatRelativeTime(item.pubDate) : 'Unknown date'}</span>
+                        </div>
+
+                        <motion.a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-medium transition-colors duration-200"
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          Read more <ExternalLink size={14} />
+                        </motion.a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {item.categories?.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {item.categories.slice(0, 3).map((category, i) => (
-                      <span key={i} className="bg-indigo-900 bg-opacity-50 text-indigo-200 px-3 py-1 rounded-full text-xs font-medium">
-                        {category}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </article>
-            )) : (
-              <div className="text-gray-300 text-center text-lg font-medium">No news available at the moment.</div>
-            )}
+                  {item.categories?.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {item.categories.slice(0, 3).map((category, i) => (
+                        <motion.span 
+                          key={i} 
+                          className="bg-indigo-900 bg-opacity-50 text-indigo-200 px-3 py-1 rounded-full text-xs font-medium"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: index * 0.1 + 0.2, duration: 0.3 }}
+                        >
+                          {category}
+                        </motion.span>
+                      ))}
+                    </div>
+                  )}
+                </motion.article>
+              )) : (
+                <motion.div 
+                  className="text-gray-300 text-center text-lg font-medium"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  No news available at the moment.
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {news.length > itemsPerPage && (
               <div className="flex justify-between items-center mt-8">
-                <button
+                <motion.button
                   onClick={() => setPage(prev => Math.max(prev - 1, 1))}
                   disabled={page === 1}
                   className="px-5 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
                 >
                   Previous
-                </button>
+                </motion.button>
 
                 <span className="text-gray-200 font-medium">
                   Page {page} of {maxPage}
                 </span>
 
-                <button
+                <motion.button
                   onClick={() => setPage(prev => Math.min(prev + 1, maxPage))}
                   disabled={page === maxPage}
                   className="px-5 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
                 >
                   Next
-                </button>
+                </motion.button>
               </div>
             )}
           </div>

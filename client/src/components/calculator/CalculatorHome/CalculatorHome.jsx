@@ -8,6 +8,7 @@ const CalculatorHome = () => {
   const calculators = [
     { name: "SIP & Lumpsum Calculator", path: "/calculator/sip-calculator", description: "Plan and estimate returns on your SIP and lump sum investments to reach your financial goals.", icon: "💰" },
     { name: "Loan Calculator", path: "/calculator/loan-calculator", description: "Calculate your loan EMIs easily based on principal, interest rate, and tenure.", icon: "🏠" },
+    { name: "AI Calculator", path: "/calculator/ai-calculator", description: "Take the guesswork out of your financial decisions with our AI-based financial calculator — your smart assistant for budgeting, investing, and forecasting.", icon: "📝" },
     { name: "Simple Interest Calculator", path: "/calculator/simple-interest-calculator", description: "Estimate your returns with simple interest on your investment.", icon: "📈" },
     { name: "Compound Interest Calculator", path: "/calculator/compound-interest-calculator", description: "Calculate returns with compound interest and visualize wealth growth over time.", icon: "📊" },
     { name: "FD Calculator", path: "/calculator/fd-calculator", description: "Calculate the returns on your Fixed Deposit based on amount, tenure, and interest rate.", icon: "🏦" },
@@ -18,7 +19,6 @@ const CalculatorHome = () => {
     { name: "Currency Conversion Calculator", path: "/calculator/currency-calculator", description: "Convert currencies instantly with real-time exchange rates. Easily switch between different currencies for accurate conversions.", icon: "💱" },
     { name: "Retirement Calculator", path: "/calculator/retirement-calculator", description: "Plan your retirement savings and estimate how much you need to save monthly to achieve your retirement goals.", icon: "👴" },
     { name: "Tax Calculator", path: "/calculator/tax-calculator", description: "Estimate your income tax liability and plan your tax savings investments effectively.", icon: "📝" },
-    { name: "AI Calculator", path: "/calculator/ai-calculator", description: "Ai Based Calculation", icon: "📝" },
   ];
 
   // Filter calculators based on search query
@@ -182,21 +182,7 @@ const CalculatorHome = () => {
               </motion.div>
             ))
           )}
-        </motion.div>
-        
-        {/* Floating action button */}
-        {/* <motion.button
-          className="fixed bottom-8 right-8 bg-yellow-500 text-black rounded-full p-4 shadow-lg z-10"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </motion.button> */}
+        </motion.div>      
       </div>
     </div>
   );
