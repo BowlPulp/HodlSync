@@ -50,7 +50,7 @@ exports.createUser = async (req, res) => {
       password: hashedPassword,
       // addressesToTrack is optional; defaults to an empty array if not provided
       addressesToTrack: addressesToTrack || [],
-      role
+      role:role,
     });
 
     // Save the user in the database
