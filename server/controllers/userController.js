@@ -27,6 +27,7 @@ function getUser(token){
  */
 exports.createUser = async (req, res) => {
   try {
+    console.log(req.body);
     const { username, email, dob, password, addressesToTrack, role} = req.body;
     
     const existingUser = await User.findOne({ email });
