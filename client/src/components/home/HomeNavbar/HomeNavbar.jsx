@@ -54,7 +54,6 @@ const HomeNavbar = () => {
             onClick={toggleGasTracker}
             className="flex items-center gap-1 text-neutral-100 hover:text-neutral-50"
           >
-            <Fuel size={16} />
             <span>Gas Tracker</span>
           </button>
           

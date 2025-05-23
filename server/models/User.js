@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  role: {
+    type: String,
+    default:"user",
+  },
 }, {
   timestamps: true, // Automatically creates `createdAt` and `updatedAt` fields
 });

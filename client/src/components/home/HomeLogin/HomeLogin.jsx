@@ -230,7 +230,7 @@ const HomeLogin = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-gradient-to-r from-green-500 to-green-700 group-hover:bg-gradient-to-l"></span>
+                    <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 bg-gradient-to-r from-green-500 to-green-700 group-hover:bg-gradient-to-l"></span>
                     <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-200 ease-out transform translate-x-0 bg-green-600 group-hover:translate-x-0"></span>
                     <span className="absolute top-0 left-0 w-full h-1 transition-all duration-200 ease-out transform -translate-x-0 bg-green-600 group-hover:translate-x-0"></span>
                     <span className="relative">
